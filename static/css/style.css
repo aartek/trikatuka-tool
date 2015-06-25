@@ -1,0 +1,6 @@
+.empty-avatar{
+    height: 40px;
+    width:40px;
+    background: #ccc;
+    display: inline-block;
+}

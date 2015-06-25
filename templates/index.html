@@ -1,0 +1,130 @@
+$def with (data, olduser, newuser)
+<div class="uk-panel uk-panel-box ">
+    <h1><i class="uk-icon-spotify uk-margin-small-right"></i>Spotify migration tool</h1>
+
+    <div class="uk-grid">
+
+    <div class="uk-width-1-1">
+    $if olduser.image_url:
+        <img class="uk-margin-small-right" src="$olduser.image_url" alt="" style="max-height: 40px;"/>
+    $else:
+        <img class="empty-avatar uk-margin-small-right"/>
+
+    <dfn>Previous user:</dfn>
+    $if olduser.access_token:
+        $olduser.name (id: $olduser.user_id)
+        <a href="sign_out_previous"><i class="uk-icon-sign-out"></i></a>
+    $else:
+        <a href="login_previous"><i class="uk-icon-sign-in uk-margin-small-right"></i>Sign in</a>
+    </div>
+
+    <div class="uk-width-1-1 uk-margin-small-top">
+    $if newuser.image_url:
+        <img class="uk-margin-small-right" src="$newuser.image_url" alt="" style="max-height: 40px;"/>
+    $else:
+        <img class="empty-avatar uk-margin-small-right"/>
+    <dfn>New user:</dfn>
+    $if newuser.access_token:
+        $newuser.name (id: $newuser.user_id)
+        <a href="sign_out_current"><i class="uk-icon-sign-out"></i></a>
+    $else:
+        <a href="login_current"><i class="uk-icon-sign-in uk-margin-small-right"></i>Sign in</a>
+    </div>
+
+    <div class="uk-width-1-1">
+    $if olduser.user_id:
+        <a class=" uk-float-right" href="playlists">Refresh playlists</a>
+    </div>
+
+    $if len(olduser.playlists):
+        <div class="uk-width-1-1">
+            <form name="playlists" action="transfer" method="post">
+                <table class="uk-table uk-table-hover">
+                    <tr>
+                        <th><input type="checkbox" onclick="selectAll(this)"/></th>
+                        <th>Name</th>
+                        <th>Public</th>
+                        <th>Collaborative</th>
+                    </tr>
+                    $for key in olduser.playlists:
+                    <tr>
+                        <td><input type="checkbox" id="checkbox-$olduser.playlists[key].id" name="pid"
+                                   value="$olduser.playlists[key].id"/></td>
+                        <td onclick="check('checkbox-$olduser.playlists[key].id')">$olduser.playlists[key].name</td>
+                        <td onclick="check('checkbox-$olduser.playlists[key].id')">
+                        $if olduser.playlists[key].public:
+                            <i class="uk-icon-check"></i>
+                        $else:
+                            <i class="uk-icon-times"></i>
+                        </td>
+                        <td onclick="check('checkbox-$olduser.playlists[key].id')">
+                        $if olduser.playlists[key].collaborative:
+                            <i class="uk-icon-check"></i>
+                        $else:
+                            <i class="uk-icon-times"></i>
+                        </td>
+                    </tr>
+                </table>
+                $if olduser.access_token and newuser.access_token and olduser.user_id != newuser.user_id:
+                    <button class="uk-button uk-button-success uk-float-right" type="submit"><i
+                            class="uk-icon-rocket uk-margin-small-right"></i>Transfer
+                    </button>
+                $else:
+                    <button class="uk-button uk-button-success uk-float-right" type="submit" disabled><i
+                            class="uk-icon-rocket uk-margin-small-right"></i>Transfer
+                    </button>
+            </form>
+        </div>
+
+        <script type="application/javascript">
+            function selectAll(source) {
+                var checkboxes = document.getElementsByName('pid');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
+            }
+
+            function check(id) {
+                var checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                }
+            }
+        </script>
+
+    <script language="javascript" type="text/javascript">
+
+        function doConnect()
+        {
+            websocket = new WebSocket('ws://localhost:7879');
+            websocket.onopen = function(evt) { onOpen(evt) };
+            websocket.onclose = function(evt) { onClose(evt) };
+            websocket.onmessage = function(evt) { onMessage(evt) };
+            websocket.onerror = function(evt) { onError(evt) };
+        }
+
+        function onOpen(evt)
+        {
+            console.log('opened')
+        }
+
+        function onClose(evt)
+        {
+            console.log('closed')
+        }
+
+        function onMessage(evt)
+        {
+            location.reload();
+        }
+
+        function onError(evt)
+        {
+            websocket.close();
+        }
+
+        doConnect();
+
+    </script>
+    </div>
+</div>

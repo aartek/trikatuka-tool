@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d8bbb987-8d1a-466e-b153-2635d74c2899" name="Default" comment="Added pooling user login state">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="" />
+    <list default="true" id="d8bbb987-8d1a-466e-b153-2635d74c2899" name="Default" comment="">
       <change type="DELETED" beforePath="C:\Users\Artur\Desktop\Projekty\spotify-migration-tool\.idea\.name" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Artur\Desktop\Projekty\spotify-migration-tool\.idea\compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Artur\Desktop\Projekty\spotify-migration-tool\.idea\copyright\profiles_settings.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Artur\Desktop\Projekty\spotify-migration-tool\.idea\encodings.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Artur\Desktop\Projekty\spotify-migration-tool\.idea\misc.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Artur\Desktop\Projekty\spotify-migration-tool\.idea\modules.xml" afterPath="" />
@@ -683,7 +683,7 @@
       <updated>1435003731898</updated>
       <workItem from="1435003735498" duration="42726000" />
       <workItem from="1435268777754" duration="61000" />
-      <workItem from="1435399925413" duration="5767000" />
+      <workItem from="1435399925413" duration="5915000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1435268042581</created>
@@ -703,11 +703,17 @@
       <option name="project" value="LOCAL" />
       <updated>1435411379747</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="deleted files">
+      <created>1435411535067</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1435411535067</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48554000" />
+    <option name="totallyTimeSpent" value="48702000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -781,7 +787,8 @@
     <MESSAGE value="First commit" />
     <MESSAGE value="Added pooling user login state" />
     <MESSAGE value="Code refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Code refactoring" />
+    <MESSAGE value="deleted files" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

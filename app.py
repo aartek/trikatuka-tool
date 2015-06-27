@@ -1,4 +1,6 @@
-from reqhandlers.request_handlers import *
+from request_handlers import *
+import sys
+import web
 
 sys.argv[1:] = ['7878']
 print sys.argv

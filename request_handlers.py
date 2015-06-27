@@ -6,6 +6,9 @@ import json
 import requests
 import sys
 
+__all__= ['Hello','Checkusers','UserAuthorized','LoginPrevious','LoginCurrent','SignOutPrevious','SignOutCurrent',
+          'Playlists','Transfer']
+
 render = web.template.render(AppContext.templates, base='layout')
 
 class Hello:

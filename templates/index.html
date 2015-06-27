@@ -93,38 +93,45 @@ $def with (data, olduser, newuser)
         </script>
 
     <script language="javascript" type="text/javascript">
+        var usersLoggedIn = {
+            prev: false,
+            curr: false
+        };
+        $if olduser.access_token:
+            usersLoggedIn.prev = true;
 
-        function doConnect()
-        {
-            websocket = new WebSocket('ws://localhost:7879');
-            websocket.onopen = function(evt) { onOpen(evt) };
-            websocket.onclose = function(evt) { onClose(evt) };
-            websocket.onmessage = function(evt) { onMessage(evt) };
-            websocket.onerror = function(evt) { onError(evt) };
+        $if newuser.access_token:
+            usersLoggedIn.curr = true;
+
+        var HttpClient = function() {
+            this.get = function(aUrl, aCallback) {
+                var anHttpRequest = new XMLHttpRequest();
+                anHttpRequest.onreadystatechange = function() {
+                    if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+                        aCallback(anHttpRequest.responseText);
+                };
+
+                anHttpRequest.open( "GET", aUrl, true );
+                anHttpRequest.send( null );
+            }
+        };
+
+        function didLoginChanged(prop, newVal){
+            if(usersLoggedIn[prop] !== newVal){
+                return true;
+            }
+            return false;
         }
 
-        function onOpen(evt)
-        {
-            console.log('opened')
-        }
-
-        function onClose(evt)
-        {
-            console.log('closed')
-        }
-
-        function onMessage(evt)
-        {
-            location.reload();
-        }
-
-        function onError(evt)
-        {
-            websocket.close();
-        }
-
-        doConnect();
-
+        var aClient = new HttpClient();
+        setInterval(function(){
+            aClient.get('/checkusers', function(response) {
+                response = JSON.parse(response);
+                if(response.users && didLoginChanged('prev',response.users.previous) || didLoginChanged('curr',response.users.current)){
+                    location.reload()
+                }
+            });
+        },3000);
     </script>
     </div>
 </div>

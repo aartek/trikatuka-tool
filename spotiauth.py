@@ -30,7 +30,8 @@ urls = (
     '/sign_out_current', 'sign_out_current',
     '/user_auth_callback', 'user_authorized',
     '/playlists', 'playlists',
-    '/transfer', 'transfer'
+    '/transfer', 'transfer',
+    '/checkusers', 'checkusers'
 )
 
 filename = os.path.join(dir, 'templates')
@@ -146,6 +147,14 @@ newuser_authorization_id = str(uuid.uuid4())
 class hello:
     def GET(self):
         return render.index(authdata,olduser,newuser)
+
+class checkusers:
+    def GET(self):
+        currentLoggedIn = True if newuser.access_token else False
+        previousLoggedIn = True if olduser.access_token else False
+        response = {'users':{'current':currentLoggedIn, 'previous': previousLoggedIn}}
+        web.header('Content-Type', 'application/json')
+        return json.dumps(response)
 
 class user_authorized:
     def GET(self):

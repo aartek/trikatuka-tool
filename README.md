@@ -7,9 +7,9 @@
 
 - `Python 2.7`
 - `Web.py` (http://webpy.org/)
-- You need to create an app on https://developer.spotify.com/ and get `clientId` and `clientSecret`
+- You need to create an app on https://developer.spotify.com/ and get `clientId` and `clientSecret`. You must also add `http://localhost:7878/client_auth_callback` and `http://localhost:7878/user_auth_callback` to urls whitelist.
 
-**Instructions**
+**Guide**
 
 1. Rename `config.cfg.template` to `config.cfg`
 2. Fill `clientID` and `clientSecret` fields and save.
@@ -20,8 +20,3 @@
 7. Select playlists you want to transfer
 8. Press transfer and wait.
 9. Done!
-
-**Known bugs**
-
-No paging support yet, so app already can display only 100 playlists, and can copy only first 100 tracks of each playlist.
-

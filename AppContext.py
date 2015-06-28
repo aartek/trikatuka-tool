@@ -1,6 +1,7 @@
 import os
 import ConfigParser
 from User import User
+from Pagination import Pagination
 
 dir = os.path.dirname('__file__')
 configfile = ConfigParser.ConfigParser()
@@ -12,11 +13,5 @@ clientSecret = configfile.get('Client', 'clientSecret')
 
 olduser = User()
 newuser = User()
-
-class Pagination():
-    def __init__(self):
-        self.total = 0
-        self.offset = 0
-        self.max = 20
 
 pagination = Pagination()

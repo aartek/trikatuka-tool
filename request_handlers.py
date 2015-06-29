@@ -96,7 +96,7 @@ class Transfer:
             playlist = AppContext.olduser.playlists[param]
             if AppContext.olduser.user_id != AppContext.newuser.user_id:
                 if playlist and playlist.collaborative:
-                    playlist.follow_collaborative(param)
+                    playlist.follow_collaborative()
                 else:
                     playlist.copy_playlist()
 

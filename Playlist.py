@@ -15,7 +15,6 @@ class Playlist:
         self.collaborative = item["collaborative"]
 
     def follow_collaborative(self):
-        print 'following...'
         payload = {
             'public': AppContext.olduser.playlists[self.id].public
         }
@@ -26,7 +25,6 @@ class Playlist:
         }
         url = 'https://api.spotify.com/v1/users/'+AppContext.olduser.user_id+'/playlists/'+self.id+'/followers'
         response = requests.put(url, data=payload, headers=headers, verify=False)
-        print response
 
     def copy_playlist(self):
         try:

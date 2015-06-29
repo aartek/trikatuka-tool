@@ -1,4 +1,4 @@
-$def with (olduser, newuser)
+$def with (olduser, newuser, pagination)
 <div class="uk-panel uk-panel-box ">
     <h1><i class="uk-icon-spotify uk-margin-small-right"></i>Trikatuka <span class="subheader">Spotify migration tool</span></h1>
 
@@ -33,7 +33,13 @@ $def with (olduser, newuser)
 
     <div class="uk-width-1-1">
     $if olduser.user_id:
-        <a class=" uk-float-right" href="playlists">Refresh playlists</a>
+        <div class="uk-float-right">
+        <a class="" href="playlists">Refresh playlists</a>
+            <form action="playlists">
+                <button id="prev_btn" type="submit" name="offset" class="uk-button"><i class="uk-icon-caret-left"></i></button>
+                <button id="next_btn" type="submit" name="offset" class="uk-button"><i class="uk-icon-caret-right"></i></button>
+            </form>
+        </div>
     </div>
 
     $if len(olduser.playlists):
@@ -77,6 +83,25 @@ $def with (olduser, newuser)
         </div>
 
         <script type="application/javascript">
+            var max = 20;
+
+            window.onload = function(){
+                var prevBtn = document.getElementById('prev_btn')
+                var nextBtn = document.getElementById('next_btn')
+
+                var currPage = $pagination.offset / $pagination.max;
+                prevBtn.value = currPage * $pagination.max - $pagination.max;
+                nextBtn.value = currPage * $pagination.max + $pagination.max;
+
+                if(prevBtn.value < 0){
+                    prevBtn.disabled = true;
+                }
+                if(nextBtn.value > $pagination.total){
+                    nextBtn.disabled = true;
+                }
+
+            };
+
             function selectAll(source) {
                 var checkboxes = document.getElementsByName('pid');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -89,6 +114,13 @@ $def with (olduser, newuser)
                 if (checkbox) {
                     checkbox.checked = !checkbox.checked;
                 }
+            }
+
+            function next_page(){
+                window.location.search = 'offset=20'
+            }
+            function next_page(){
+                window.location.search = 'offset=20'
             }
         </script>
 

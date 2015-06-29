@@ -37,8 +37,12 @@ class User:
             self.image_url = response["images"][0]["url"]
 
     def loadPlaylists(self):
-        response = requests.get('https://api.spotify.com/v1/users/'+str(self.user_id)+'/playlists', headers=self.getHeaders(), verify=False)
+        payload = {
+            'offset': AppContext.pagination.offset
+        }
+        response = requests.get('https://api.spotify.com/v1/users/'+str(self.user_id)+'/playlists', params=payload, headers=self.getHeaders(), verify=False)
         response = response.json();
+        AppContext.pagination.total = response["total"]
         self.setPlaylists(response["items"])
 
     def getHeaders(self):
@@ -48,6 +52,7 @@ class User:
         return headers
 
     def setPlaylists(self, items):
+        self.playlists = {};
         for item in items:
             playlist = Playlist(item)
             self.playlists[playlist.id]=playlist

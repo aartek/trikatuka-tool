@@ -1,3 +1,4 @@
+import logging
 import AppContext
 import requests
 import sys
@@ -28,26 +29,17 @@ class Playlist:
         print response
 
     def copy_playlist(self):
-        headers = {
-            'Authorization': 'Bearer ' + AppContext.olduser.access_token,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-        payload = {
-            'fields': 'items(track.uri)'
-        }
+        try:
+            tracks = self._load_tracks()
+            uris = []
+            for item in tracks:
+                uris.append(item["track"]["uri"])
+            new_playlist_id = self._create_playlist()
+            self._add_tracks_to_playlist(uris, new_playlist_id)
 
-        url = 'https://api.spotify.com/v1/users/'+AppContext.olduser.user_id+'/playlists/'+self.id+'/tracks'
-        response = requests.get(url, params=payload, headers=headers, verify=False)
-        response = response.json()
-
-        tracks = self._load_tracks()
-        uris = []
-        for item in tracks:
-            uris.append(item["track"]["uri"])
-
-        new_playlist_id = self._create_playlist()
-        self._add_tracks_to_playlist(uris, new_playlist_id)
+        except requests.exceptions.HTTPError:
+            msg = "Could not copy playlist \"%s\" id: %s" % (self.name, self.id)
+            logging.error(msg)
 
     def _load_tracks(self):
         tracks_json = self._fetch_tracks(0)
@@ -73,12 +65,9 @@ class Playlist:
         }
         url = 'https://api.spotify.com/v1/users/'+AppContext.olduser.user_id+'/playlists/'+self.id+'/tracks'
         response = requests.get(url, params=payload, headers=headers, verify=False)
+        response.raise_for_status()
         response = response.json()
         return response
-
-        url = 'https://api.spotify.com/v1/users/'+AppContext.olduser.user_id+'/playlists/'+self.id+'/tracks'
-        response = requests.get(url, params=payload, headers=headers, verify=False)
-        response = response.json()
 
     def _create_playlist(self):
         headers = {

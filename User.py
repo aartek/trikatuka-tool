@@ -20,7 +20,7 @@ class User:
 
     def login(self):
         redirect_uri="http://localhost:7878/user_auth_callback"
-        scope="playlist-read-private%20playlist-read-collaborative%20playlist-modify-public%20playlist-modify-private%20user-follow-read"
+        scope="user-library-read%20user-library-modify%20playlist-read-private%20playlist-read-collaborative%20playlist-modify-public%20playlist-modify-private%20user-follow-read"
         show_dialog="true"
         url = 'https://accounts.spotify.com/authorize?client_id='+AppContext.clientID+'&response_type=code&redirect_uri='+redirect_uri+'&client_secret='+AppContext.clientSecret+'&show_dialog=true&state='+self.authorization_id+'&scope='+scope
         webbrowser.open(url)

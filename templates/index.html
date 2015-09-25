@@ -45,6 +45,8 @@ $def with (olduser, newuser, pagination)
     $if len(olduser.playlists):
         <div class="uk-width-1-1">
             <form name="playlists" action="transfer" method="post">
+                <input type="checkbox" name="copy_tracks" value="true" id="copy_tracks"/>
+                <label for="copy_tracks">Copy songs from "Your music" collection</label>
                 <table class="uk-table uk-table-hover">
                     <tr>
                         <th><input type="checkbox" onclick="selectAll(this)"/></th>

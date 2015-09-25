@@ -13,6 +13,7 @@ class Playlist:
         self.name = item["name"]
         self.public = item["public"]
         self.collaborative = item["collaborative"]
+        self.owner = item["owner"]["id"]
 
     def follow_collaborative(self):
         payload = {
@@ -23,8 +24,9 @@ class Playlist:
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
-        url = 'https://api.spotify.com/v1/users/'+AppContext.olduser.user_id+'/playlists/'+self.id+'/followers'
+        url = 'https://api.spotify.com/v1/users/'+self.owner+'/playlists/'+self.id+'/followers'
         response = requests.put(url, data=payload, headers=headers, verify=False)
+        print response
 
     def copy_playlist(self):
         try:

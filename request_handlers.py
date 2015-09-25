@@ -5,15 +5,18 @@ import base64
 import json
 import requests
 import sys
+from UserTracks import UserTracks
 
 __all__= ['Hello','Checkusers','UserAuthorized','LoginPrevious','LoginCurrent','SignOutPrevious','SignOutCurrent',
           'Playlists','Transfer']
 
 render = web.template.render(AppContext.templates, base='layout')
 
+
 class Hello:
     def GET(self):
         return render.index(AppContext.olduser, AppContext.newuser, AppContext.pagination)
+
 
 class Checkusers:
     def GET(self):
@@ -22,6 +25,7 @@ class Checkusers:
         response = {'users':{'current':currentLoggedIn, 'previous': previousLoggedIn}}
         web.header('Content-Type', 'application/json')
         return json.dumps(response)
+
 
 class UserAuthorized:
     def GET(self):
@@ -56,25 +60,30 @@ class UserAuthorized:
         else:
             return render.loginUnsuccessful()
 
+
 class LoginPrevious:
     def GET(self):
         AppContext.olduser.login()
         raise web.seeother('/')
+
 
 class LoginCurrent:
     def GET(self):
         AppContext.newuser.login()
         raise web.seeother('/')
 
+
 class SignOutPrevious:
     def GET(self):
         AppContext.olduser.logout()
         raise web.seeother('/')
 
+
 class SignOutCurrent:
     def GET(self):
         AppContext.newuser.logout()
         raise web.seeother('/')
+
 
 class Playlists:
     def GET(self):
@@ -84,9 +93,10 @@ class Playlists:
         AppContext.olduser.loadPlaylists()
         raise web.seeother('/')
 
+
 class Transfer:
     def POST(self):
-        params  = web.input(pid = [])
+        params = web.input(pid=[], copy_tracks=False)
         print params
 
         if not AppContext.newuser.access_token or not AppContext.olduser.access_token:
@@ -99,6 +109,10 @@ class Transfer:
                     playlist.follow_collaborative()
                 else:
                     playlist.copy_playlist()
+
+        if params['copy_tracks'] == 'true':
+            user_tracks = UserTracks()
+            user_tracks.copy_tracks(AppContext.olduser, AppContext.newuser)
 
         raise web.seeother('/')
 

@@ -1,11 +1,17 @@
-#Trikatuka - Spotify playlists migration tool
+
+**DEPRECATED** 
+
+Here is the newer, nodejs version https://github.com/aartek/trikatuka2
+
+
+# Trikatuka - Spotify playlists migration tool
 
 **Trikatuka** is a tool helping transfer Spotify playlists from one account to another.
 
 - *Collaborative* playlists are followed.
 - *Public* and *private* playlists are copied.
 
-##For humans
+## For humans
 
 **Windows users**:
 
@@ -25,7 +31,7 @@ Already you need to follow the instructions from "For developers" section...
 6. Done!
 
 
-##For developers
+## For developers
 
 **Requirements**
 - `Python 2.7`
